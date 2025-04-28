@@ -6,5 +6,14 @@ namespace ID_Card_Inventory
         {
             InitializeComponent();
         }
+
+        private void AddEmployeebutton_Click(object sender, EventArgs e)
+        {
+            AddEmpForm addForm = new AddEmpForm();
+            addForm.Show();
+
+
+
+        }
     }
 }

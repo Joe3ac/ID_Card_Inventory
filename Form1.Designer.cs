@@ -30,7 +30,7 @@
         {
             dataGridView1 = new DataGridView();
             label1 = new Label();
-            button1 = new Button();
+            AddEmployeebutton = new Button();
             panel1 = new Panel();
             richTextBox1 = new RichTextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -54,19 +54,20 @@
             label1.TabIndex = 1;
             label1.Text = "label1";
             // 
-            // button1
+            // AddEmployeebutton
             // 
-            button1.Location = new Point(495, 52);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 2;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
+            AddEmployeebutton.Location = new Point(502, 14);
+            AddEmployeebutton.Name = "AddEmployeebutton";
+            AddEmployeebutton.Size = new Size(96, 41);
+            AddEmployeebutton.TabIndex = 2;
+            AddEmployeebutton.Text = "Add Employee";
+            AddEmployeebutton.UseVisualStyleBackColor = true;
+            AddEmployeebutton.Click += AddEmployeebutton_Click;
             // 
             // panel1
             // 
             panel1.Controls.Add(richTextBox1);
-            panel1.Controls.Add(button1);
+            panel1.Controls.Add(AddEmployeebutton);
             panel1.Controls.Add(label1);
             panel1.Location = new Point(29, 29);
             panel1.Name = "panel1";
@@ -100,7 +101,7 @@
 
         private DataGridView dataGridView1;
         private Label label1;
-        private Button button1;
+        private Button AddEmployeebutton;
         private Panel panel1;
         private RichTextBox richTextBox1;
     }
