@@ -31,7 +31,7 @@ namespace ID_Card_Inventory
                     {
                         // Display the image
                         IDpictureBox.Image = Image.FromFile(filePath);
-                        
+
                     }
                     catch (Exception ex)
                     {
@@ -43,5 +43,33 @@ namespace ID_Card_Inventory
                 }
             }
         }
+
+        private void Saved_button_Click(object sender, EventArgs e)
+        {
+            string nameInput = NameTextBox.Text;
+            string surnameInput = SurnameTextBox.Text;
+            string idNumInput = IDNumTextBox.Text;
+            bool isNameValid = !string.IsNullOrWhiteSpace(nameInput);
+            bool isSurnameValid = !string.IsNullOrWhiteSpace(surnameInput);
+            bool isIDNumValid = !string.IsNullOrWhiteSpace(idNumInput);
+            if (isNameValid && isSurnameValid && isIDNumValid)
+            {
+               //string EmP_Name = string.IsNullOrEmpty(nameInput);
+                string.IsNullOrEmpty(surnameInput);
+                string.IsNullOrEmpty(idNumInput);
+                bool isSourceValid = !string.IsNullOrEmpty(sourceInput) && sourceInput != "-- Select --";
+                // Check if all inputs are valid
+                string departmentInput = DeptMent_comboBox.SelectedValue?.ToString().Trim();
+                ID_CardInventory_CLass idCard = new ID_CardInventory_CLass(nameInput, surnameInput, idNumInput, departmentInput, positionInput, dateOfIssueInput);
+                // Save the ID card information to a database or file here
+                MessageBox.Show("Employee information saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+        
     }
 }

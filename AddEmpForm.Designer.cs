@@ -30,19 +30,19 @@
         {
             flowLayoutPanel1 = new FlowLayoutPanel();
             label1 = new Label();
-            richTextBox1 = new RichTextBox();
+            NameTextBox = new RichTextBox();
             label2 = new Label();
-            richTextBox2 = new RichTextBox();
+            SurnameTextBox = new RichTextBox();
             label3 = new Label();
-            richTextBox3 = new RichTextBox();
+            IDNumTextBox = new RichTextBox();
             label4 = new Label();
-            comboBox1 = new ComboBox();
+            DeptMent_comboBox = new ComboBox();
             label7 = new Label();
-            richTextBox4 = new RichTextBox();
+            PositionTextbox = new RichTextBox();
             label8 = new Label();
-            dateTimePicker1 = new DateTimePicker();
+            dateOfIssue = new DateTimePicker();
             label9 = new Label();
-            comboBox2 = new ComboBox();
+            EmploymentStatus_Combo = new ComboBox();
             label5 = new Label();
             IDpictureBox = new PictureBox();
             panel1 = new Panel();
@@ -61,19 +61,19 @@
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Controls.Add(label1);
-            flowLayoutPanel1.Controls.Add(richTextBox1);
+            flowLayoutPanel1.Controls.Add(NameTextBox);
             flowLayoutPanel1.Controls.Add(label2);
-            flowLayoutPanel1.Controls.Add(richTextBox2);
+            flowLayoutPanel1.Controls.Add(SurnameTextBox);
             flowLayoutPanel1.Controls.Add(label3);
-            flowLayoutPanel1.Controls.Add(richTextBox3);
+            flowLayoutPanel1.Controls.Add(IDNumTextBox);
             flowLayoutPanel1.Controls.Add(label4);
-            flowLayoutPanel1.Controls.Add(comboBox1);
+            flowLayoutPanel1.Controls.Add(DeptMent_comboBox);
             flowLayoutPanel1.Controls.Add(label7);
-            flowLayoutPanel1.Controls.Add(richTextBox4);
+            flowLayoutPanel1.Controls.Add(PositionTextbox);
             flowLayoutPanel1.Controls.Add(label8);
-            flowLayoutPanel1.Controls.Add(dateTimePicker1);
+            flowLayoutPanel1.Controls.Add(dateOfIssue);
             flowLayoutPanel1.Controls.Add(label9);
-            flowLayoutPanel1.Controls.Add(comboBox2);
+            flowLayoutPanel1.Controls.Add(EmploymentStatus_Combo);
             flowLayoutPanel1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             flowLayoutPanel1.Location = new Point(55, 51);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -90,13 +90,13 @@
             label1.TabIndex = 0;
             label1.Text = "First Name:";
             // 
-            // richTextBox1
+            // NameTextBox
             // 
-            richTextBox1.Location = new Point(3, 20);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(174, 29);
-            richTextBox1.TabIndex = 4;
-            richTextBox1.Text = "";
+            NameTextBox.Location = new Point(3, 20);
+            NameTextBox.Name = "NameTextBox";
+            NameTextBox.Size = new Size(174, 29);
+            NameTextBox.TabIndex = 4;
+            NameTextBox.Text = "";
             // 
             // label2
             // 
@@ -107,13 +107,13 @@
             label2.TabIndex = 1;
             label2.Text = "Surname:";
             // 
-            // richTextBox2
+            // SurnameTextBox
             // 
-            richTextBox2.Location = new Point(3, 72);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(174, 29);
-            richTextBox2.TabIndex = 5;
-            richTextBox2.Text = "";
+            SurnameTextBox.Location = new Point(3, 72);
+            SurnameTextBox.Name = "SurnameTextBox";
+            SurnameTextBox.Size = new Size(174, 29);
+            SurnameTextBox.TabIndex = 5;
+            SurnameTextBox.Text = "";
             // 
             // label3
             // 
@@ -124,13 +124,13 @@
             label3.TabIndex = 2;
             label3.Text = "Employee Number:";
             // 
-            // richTextBox3
+            // IDNumTextBox
             // 
-            richTextBox3.Location = new Point(3, 124);
-            richTextBox3.Name = "richTextBox3";
-            richTextBox3.Size = new Size(174, 29);
-            richTextBox3.TabIndex = 6;
-            richTextBox3.Text = "";
+            IDNumTextBox.Location = new Point(3, 124);
+            IDNumTextBox.Name = "IDNumTextBox";
+            IDNumTextBox.Size = new Size(174, 29);
+            IDNumTextBox.TabIndex = 6;
+            IDNumTextBox.Text = "";
             // 
             // label4
             // 
@@ -141,13 +141,13 @@
             label4.TabIndex = 3;
             label4.Text = "Department:";
             // 
-            // comboBox1
+            // DeptMent_comboBox
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(3, 176);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(174, 25);
-            comboBox1.TabIndex = 0;
+            DeptMent_comboBox.FormattingEnabled = true;
+            DeptMent_comboBox.Location = new Point(3, 176);
+            DeptMent_comboBox.Name = "DeptMent_comboBox";
+            DeptMent_comboBox.Size = new Size(174, 25);
+            DeptMent_comboBox.TabIndex = 0;
             // 
             // label7
             // 
@@ -158,13 +158,13 @@
             label7.TabIndex = 7;
             label7.Text = "Position:";
             // 
-            // richTextBox4
+            // PositionTextbox
             // 
-            richTextBox4.Location = new Point(3, 224);
-            richTextBox4.Name = "richTextBox4";
-            richTextBox4.Size = new Size(174, 29);
-            richTextBox4.TabIndex = 8;
-            richTextBox4.Text = "";
+            PositionTextbox.Location = new Point(3, 224);
+            PositionTextbox.Name = "PositionTextbox";
+            PositionTextbox.Size = new Size(174, 29);
+            PositionTextbox.TabIndex = 8;
+            PositionTextbox.Text = "";
             // 
             // label8
             // 
@@ -175,13 +175,13 @@
             label8.TabIndex = 9;
             label8.Text = "Date of Issue:";
             // 
-            // dateTimePicker1
+            // dateOfIssue
             // 
-            dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(3, 276);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(174, 25);
-            dateTimePicker1.TabIndex = 10;
+            dateOfIssue.Format = DateTimePickerFormat.Short;
+            dateOfIssue.Location = new Point(3, 276);
+            dateOfIssue.Name = "dateOfIssue";
+            dateOfIssue.Size = new Size(174, 25);
+            dateOfIssue.TabIndex = 10;
             // 
             // label9
             // 
@@ -192,13 +192,13 @@
             label9.TabIndex = 11;
             label9.Text = "Employment Status:";
             // 
-            // comboBox2
+            // EmploymentStatus_Combo
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(3, 324);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(174, 25);
-            comboBox2.TabIndex = 12;
+            EmploymentStatus_Combo.FormattingEnabled = true;
+            EmploymentStatus_Combo.Location = new Point(3, 324);
+            EmploymentStatus_Combo.Name = "EmploymentStatus_Combo";
+            EmploymentStatus_Combo.Size = new Size(174, 25);
+            EmploymentStatus_Combo.TabIndex = 12;
             // 
             // label5
             // 
@@ -252,6 +252,7 @@
             Saved_button.TabIndex = 7;
             Saved_button.Text = "Save Changes";
             Saved_button.UseVisualStyleBackColor = true;
+            Saved_button.Click += Saved_button_Click;
             // 
             // Add_Photo_Bttn
             // 
@@ -315,20 +316,20 @@
         private Label label2;
         private Label label3;
         private Label label4;
-        private ComboBox comboBox1;
-        private RichTextBox richTextBox1;
-        private RichTextBox richTextBox2;
-        private RichTextBox richTextBox3;
+        private ComboBox DeptMent_comboBox;
+        private RichTextBox NameTextBox;
+        private RichTextBox SurnameTextBox;
+        private RichTextBox IDNumTextBox;
         private Label label5;
         private PictureBox IDpictureBox;
         private Panel panel1;
         private Label label6;
         private Label label7;
-        private RichTextBox richTextBox4;
+        private RichTextBox PositionTextbox;
         private Label label8;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker dateOfIssue;
         private Label label9;
-        private ComboBox comboBox2;
+        private ComboBox EmploymentStatus_Combo;
         private OpenFileDialog openFileDialog1;
         private Button Saved_button;
         private Button Add_Photo_Bttn;
