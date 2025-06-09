@@ -28,37 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            iDdataGridView = new DataGridView();
             label1 = new Label();
             AddEmployeebutton = new Button();
             panel1 = new Panel();
-            richTextBox1 = new RichTextBox();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            NameSearch = new RichTextBox();
+            groupBox1 = new GroupBox();
+            label2 = new Label();
+            deptSearchcomboBox = new ComboBox();
+            ((System.ComponentModel.ISupportInitialize)iDdataGridView).BeginInit();
             panel1.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
-            // dataGridView1
+            // iDdataGridView
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(29, 224);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(662, 207);
-            dataGridView1.TabIndex = 0;
+            iDdataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            iDdataGridView.Location = new Point(37, 293);
+            iDdataGridView.Margin = new Padding(5, 6, 5, 6);
+            iDdataGridView.Name = "iDdataGridView";
+            iDdataGridView.RowHeadersWidth = 72;
+            iDdataGridView.Size = new Size(1149, 545);
+            iDdataGridView.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(210, 14);
+            label1.Location = new Point(8, 85);
+            label1.Margin = new Padding(5, 0, 5, 0);
             label1.Name = "label1";
-            label1.Size = new Size(38, 15);
+            label1.Size = new Size(74, 30);
             label1.TabIndex = 1;
-            label1.Text = "label1";
+            label1.Text = "Name:";
             // 
             // AddEmployeebutton
             // 
-            AddEmployeebutton.Location = new Point(502, 14);
+            AddEmployeebutton.Location = new Point(818, 6);
+            AddEmployeebutton.Margin = new Padding(5, 6, 5, 6);
             AddEmployeebutton.Name = "AddEmployeebutton";
-            AddEmployeebutton.Size = new Size(96, 41);
+            AddEmployeebutton.Size = new Size(283, 82);
             AddEmployeebutton.TabIndex = 2;
             AddEmployeebutton.Text = "Add Employee";
             AddEmployeebutton.UseVisualStyleBackColor = true;
@@ -66,43 +75,81 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(richTextBox1);
+            panel1.Controls.Add(groupBox1);
             panel1.Controls.Add(AddEmployeebutton);
-            panel1.Controls.Add(label1);
-            panel1.Location = new Point(29, 29);
+            panel1.Location = new Point(50, 44);
+            panel1.Margin = new Padding(5, 6, 5, 6);
             panel1.Name = "panel1";
-            panel1.Size = new Size(645, 93);
+            panel1.Size = new Size(1106, 200);
             panel1.TabIndex = 3;
             // 
-            // richTextBox1
+            // NameSearch
             // 
-            richTextBox1.Location = new Point(177, 44);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(131, 31);
-            richTextBox1.TabIndex = 3;
-            richTextBox1.Text = "";
+            NameSearch.Location = new Point(84, 70);
+            NameSearch.Margin = new Padding(5, 6, 5, 6);
+            NameSearch.Name = "NameSearch";
+            NameSearch.Size = new Size(279, 58);
+            NameSearch.TabIndex = 3;
+            NameSearch.Text = "";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(deptSearchcomboBox);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(NameSearch);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Location = new Point(9, 43);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(801, 154);
+            groupBox1.TabIndex = 4;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "SEARCH";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(373, 85);
+            label2.Margin = new Padding(5, 0, 5, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(129, 30);
+            label2.TabIndex = 4;
+            label2.Text = "Department:";
+            // 
+            // deptSearchcomboBox
+            // 
+            deptSearchcomboBox.FormattingEnabled = true;
+            deptSearchcomboBox.Location = new Point(510, 85);
+            deptSearchcomboBox.Name = "deptSearchcomboBox";
+            deptSearchcomboBox.Size = new Size(258, 38);
+            deptSearchcomboBox.TabIndex = 5;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(12F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(720, 453);
+            ClientSize = new Size(1222, 905);
             Controls.Add(panel1);
-            Controls.Add(dataGridView1);
+            Controls.Add(iDdataGridView);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(5, 6, 5, 6);
             Name = "Form1";
-            Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            Text = "ID CARD INVENTORY";
+            ((System.ComponentModel.ISupportInitialize)iDdataGridView).EndInit();
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView iDdataGridView;
         private Label label1;
         private Button AddEmployeebutton;
         private Panel panel1;
-        private RichTextBox richTextBox1;
+        private RichTextBox NameSearch;
+        private GroupBox groupBox1;
+        private Label label2;
+        private ComboBox deptSearchcomboBox;
     }
 }
