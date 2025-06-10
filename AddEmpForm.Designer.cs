@@ -318,7 +318,7 @@
             Controls.Add(IDpictureBox);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(label5);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Margin = new Padding(5, 6, 5, 6);
             Name = "AddEmpForm";
             Text = "Empolyee Details Form";

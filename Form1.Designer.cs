@@ -33,13 +33,18 @@
             label1 = new Label();
             AddEmployeebutton = new Button();
             panel1 = new Panel();
-            NameSearch = new RichTextBox();
             groupBox1 = new GroupBox();
-            label2 = new Label();
             deptSearchcomboBox = new ComboBox();
+            label2 = new Label();
+            NameSearch = new RichTextBox();
+            InvetoryMenu = new MenuStrip();
+            menuToolStripMenuItem = new ToolStripMenuItem();
+            ItemsToolStripMenuItem = new ToolStripMenuItem();
+            addEmployeeToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)iDdataGridView).BeginInit();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
+            InvetoryMenu.SuspendLayout();
             SuspendLayout();
             // 
             // iDdataGridView
@@ -83,15 +88,6 @@
             panel1.Size = new Size(1106, 200);
             panel1.TabIndex = 3;
             // 
-            // NameSearch
-            // 
-            NameSearch.Location = new Point(84, 70);
-            NameSearch.Margin = new Padding(5, 6, 5, 6);
-            NameSearch.Name = "NameSearch";
-            NameSearch.Size = new Size(279, 58);
-            NameSearch.TabIndex = 3;
-            NameSearch.Text = "";
-            // 
             // groupBox1
             // 
             groupBox1.Controls.Add(deptSearchcomboBox);
@@ -105,6 +101,14 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "SEARCH";
             // 
+            // deptSearchcomboBox
+            // 
+            deptSearchcomboBox.FormattingEnabled = true;
+            deptSearchcomboBox.Location = new Point(510, 85);
+            deptSearchcomboBox.Name = "deptSearchcomboBox";
+            deptSearchcomboBox.Size = new Size(258, 38);
+            deptSearchcomboBox.TabIndex = 5;
+            // 
             // label2
             // 
             label2.AutoSize = true;
@@ -115,13 +119,44 @@
             label2.TabIndex = 4;
             label2.Text = "Department:";
             // 
-            // deptSearchcomboBox
+            // NameSearch
             // 
-            deptSearchcomboBox.FormattingEnabled = true;
-            deptSearchcomboBox.Location = new Point(510, 85);
-            deptSearchcomboBox.Name = "deptSearchcomboBox";
-            deptSearchcomboBox.Size = new Size(258, 38);
-            deptSearchcomboBox.TabIndex = 5;
+            NameSearch.Location = new Point(84, 70);
+            NameSearch.Margin = new Padding(5, 6, 5, 6);
+            NameSearch.Name = "NameSearch";
+            NameSearch.Size = new Size(279, 58);
+            NameSearch.TabIndex = 3;
+            NameSearch.Text = "";
+            // 
+            // InvetoryMenu
+            // 
+            InvetoryMenu.ImageScalingSize = new Size(28, 28);
+            InvetoryMenu.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem });
+            InvetoryMenu.Location = new Point(0, 0);
+            InvetoryMenu.Name = "InvetoryMenu";
+            InvetoryMenu.Size = new Size(1222, 38);
+            InvetoryMenu.TabIndex = 4;
+            InvetoryMenu.Text = "menuStrip1";
+            // 
+            // menuToolStripMenuItem
+            // 
+            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ItemsToolStripMenuItem, addEmployeeToolStripMenuItem });
+            menuToolStripMenuItem.Name = "menuToolStripMenuItem";
+            menuToolStripMenuItem.Size = new Size(85, 34);
+            menuToolStripMenuItem.Text = "Menu";
+            // 
+            // ItemsToolStripMenuItem
+            // 
+            ItemsToolStripMenuItem.Name = "ItemsToolStripMenuItem";
+            ItemsToolStripMenuItem.Size = new Size(315, 40);
+            ItemsToolStripMenuItem.Text = "Items Collection";
+            ItemsToolStripMenuItem.Click += ItemsToolStripMenuItem_Click;
+            // 
+            // addEmployeeToolStripMenuItem
+            // 
+            addEmployeeToolStripMenuItem.Name = "addEmployeeToolStripMenuItem";
+            addEmployeeToolStripMenuItem.Size = new Size(315, 40);
+            addEmployeeToolStripMenuItem.Text = "Add Employee";
             // 
             // Form1
             // 
@@ -130,15 +165,21 @@
             ClientSize = new Size(1222, 905);
             Controls.Add(panel1);
             Controls.Add(iDdataGridView);
+            Controls.Add(InvetoryMenu);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MainMenuStrip = InvetoryMenu;
             Margin = new Padding(5, 6, 5, 6);
+            MinimumSize = new Size(1246, 969);
             Name = "Form1";
             Text = "ID CARD INVENTORY";
             ((System.ComponentModel.ISupportInitialize)iDdataGridView).EndInit();
             panel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            InvetoryMenu.ResumeLayout(false);
+            InvetoryMenu.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -151,5 +192,9 @@
         private GroupBox groupBox1;
         private Label label2;
         private ComboBox deptSearchcomboBox;
+        private MenuStrip InvetoryMenu;
+        private ToolStripMenuItem menuToolStripMenuItem;
+        private ToolStripMenuItem ItemsToolStripMenuItem;
+        private ToolStripMenuItem addEmployeeToolStripMenuItem;
     }
 }

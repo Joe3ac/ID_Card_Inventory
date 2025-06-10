@@ -78,7 +78,8 @@ namespace ID_Card_Inventory
             if (idCard != null)
             {                 // Assuming you have a method to save the ID_CardInventory_CLass instance
                 string query = $"INSERT INTO EmployeeDetails (Name, Surname, ID_Number, Department, Position, Date_Of_Issue) " +
-                               $"VALUES (@name,@surname,@idnumber,@department,@position )";
+                               $"VALUES (@name,@surname,@idnumber,@department,@position, )";
+                ExecuteSQLQuery(query);
 
                 // SaveIDCard(idCard);
                 MessageBox.Show("Employee details saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
