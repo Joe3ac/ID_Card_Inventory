@@ -46,16 +46,17 @@ namespace ID_Card_Inventory
 
                     using SqlCommand cmd = new SqlCommand("ItemsLoadCombobox", con); // Adjust the query based on your database schema
                     {
+
                         cmd.CommandType = CommandType.StoredProcedure; // Assuming you are using a stored procedure
 
                         cmd.Parameters.AddWithValue("@TypeId", typeID);
-                        SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                        SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
                         DataTable data = new DataTable();
                         dataAdapter.Fill(data);
                         OptionValuedataGridView.AutoGenerateColumns = true;
 
 
-                        cmd.ExecuteNonQuery();
+
                         OptionValuedataGridView.DataSource = data;
                         OptionValuedataGridView.Columns["OptionID"].Visible = false;
                         OptionValuedataGridView.Columns["ComboTypeID"].Visible = false;
@@ -84,25 +85,25 @@ namespace ID_Card_Inventory
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    try 
+                    try
                     {
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                         DataTable dt = new DataTable();
                         adapter.Fill(dt);
 
-                        typeCombolistBox.DisplayMember = "ComboValues"; // What the user sees
-                        typeCombolistBox.ValueMember = "OptionID";     // The ID you want to get
+                        typeCombolistBox.DisplayMember = "ComboboxName"; // What the user sees
+                        typeCombolistBox.ValueMember = "ComboTypeID";     // The ID you want to get
                         typeCombolistBox.DataSource = dt;
                     }
                     catch (SqlException sqlEx)
                     {
                         MessageBox.Show("SQL Error: " + sqlEx.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        this.Close(); // Close the form if an error occurs
+                        // Close the form if an error occurs
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("An error occurred while loading types: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        this.Close(); // Close the form if an error occurs
+                        // Close the form if an error occurs
                     }
 
                 }
@@ -110,7 +111,7 @@ namespace ID_Card_Inventory
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while loading types: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close(); // Close the form if an error occurs
+                // Close the form if an error occurs
             }
         }
 
@@ -118,11 +119,16 @@ namespace ID_Card_Inventory
         private void typeCombolistBox_Click(object sender, EventArgs e)
         {
             isButtonEnable(false); // Enable the AddValue button when a type is selected
-            if (typeCombolistBox.SelectedValue != null)
+            if (typeCombolistBox.SelectedValue != null && int.TryParse(typeCombolistBox.SelectedValue.ToString(), out int typeID))
             {
-                int selectedId = Convert.ToInt32(typeCombolistBox.SelectedValue);
-                LoadValuesToDataGridView(selectedId); // Load values based on the selected typeID
-                typelabel.Text = typeCombolistBox.SelectedItem.ToString(); // Display the selected type in the label
+
+                typeID = Convert.ToInt32(typeCombolistBox.SelectedValue);
+                LoadValuesToDataGridView(typeID); // Load values based on the selected typeID
+                string name = typeCombolistBox.Text; // This is the DisplayMember
+                string id = typeCombolistBox.SelectedValue?.ToString(); // This is the ValueMember
+
+                typelabel.Text = $"{id}:{name}";
+
             }
         }
         private void isButtonEnable(bool enable)
@@ -134,7 +140,11 @@ namespace ID_Card_Inventory
 
 
             }
-             
+            if (enable == false)
+            {
+                AddValuebutton.Show();
+            }
+
 
 
         }
@@ -172,6 +182,55 @@ namespace ID_Card_Inventory
                     MessageBox.Show("Please enter a valid value.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
+        }
+
+        private void OptionValuedataGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                // Optional: Select the cell that was right-clicked
+                OptionValuedataGridView.ClearSelection();
+                OptionValuedataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
+
+                // Optional: Show a context menu (if you have one)
+                contextMenuStrip1.Show(Cursor.Position);
+            }
+        }
+
+        private void delToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int optionID = Convert.ToInt32(OptionValuedataGridView.SelectedRows[0].Cells["OptionID"].Value);
+            if (MessageBox.Show("Are you sure you want to delete this value?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                ExecuteDeleteQuery(optionID);
+            }
+        }
+        private void ExecuteDeleteQuery(int optionID)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("DeleteComboOption", con)) // Adjust the stored procedure name as needed
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@OptionId", optionID);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                LoadValuesToDataGridView(Convert.ToInt32(typeCombolistBox.SelectedValue)); // Reload the DataGridView
+                MessageBox.Show("Value deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while deleting the value: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var editBox = Interaction.InputBox("Enter the new value:", "Edit Value", OptionValuedataGridView.SelectedRows[0].Cells["ComboValues"].Value?.ToString(), -1, -1);
         }
     }
 }

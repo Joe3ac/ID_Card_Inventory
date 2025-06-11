@@ -43,6 +43,8 @@
             dateOfIssue = new DateTimePicker();
             label9 = new Label();
             EmploymentStatus_Combo = new ComboBox();
+            label11 = new Label();
+            costCenter = new ComboBox();
             label5 = new Label();
             IDpictureBox = new PictureBox();
             panel1 = new Panel();
@@ -74,6 +76,8 @@
             flowLayoutPanel1.Controls.Add(dateOfIssue);
             flowLayoutPanel1.Controls.Add(label9);
             flowLayoutPanel1.Controls.Add(EmploymentStatus_Combo);
+            flowLayoutPanel1.Controls.Add(label11);
+            flowLayoutPanel1.Controls.Add(costCenter);
             flowLayoutPanel1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             flowLayoutPanel1.Location = new Point(94, 102);
             flowLayoutPanel1.Margin = new Padding(5, 6, 5, 6);
@@ -214,6 +218,23 @@
             EmploymentStatus_Combo.Name = "EmploymentStatus_Combo";
             EmploymentStatus_Combo.Size = new Size(295, 39);
             EmploymentStatus_Combo.TabIndex = 12;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(3, 633);
+            label11.Name = "label11";
+            label11.Size = new Size(137, 31);
+            label11.TabIndex = 13;
+            label11.Text = "Cost Center";
+            // 
+            // costCenter
+            // 
+            costCenter.FormattingEnabled = true;
+            costCenter.Location = new Point(3, 667);
+            costCenter.Name = "costCenter";
+            costCenter.Size = new Size(297, 39);
+            costCenter.TabIndex = 14;
             // 
             // label5
             // 
@@ -359,5 +380,7 @@
         private Button Add_Photo_Bttn;
         private Label label10;
         private Panel panel2;
+        private Label label11;
+        private ComboBox costCenter;
     }
 }

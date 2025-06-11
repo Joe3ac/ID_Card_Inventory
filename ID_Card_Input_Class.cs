@@ -28,19 +28,27 @@ public class Class1
             dataGridView.AutoGenerateColumns = false;
             dataGridView.AllowUserToAddRows = false;
             dataGridView.AllowUserToDeleteRows = false;
+            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView.BackgroundColor = System.Drawing.Color.White;
             dataGridView.Font = new System.Drawing.Font("Arial", 10, System.Drawing.FontStyle.Regular);
-            dataGridView.RowHeadersVisible = false;
+            dataGridView.RowHeadersVisible = true;
             dataGridView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Arial", 10, System.Drawing.FontStyle.Bold);
             dataGridView.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.LightGray;
             dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.Black;
-            dataGridView.ForeColor = System.Drawing.Color.AliceBlue;
+            dataGridView.ForeColor = System.Drawing.Color.DarkBlue;
+            dataGridView.RowPostPaint += (sender, e) => 
+            {
+                using (var brush = new System.Drawing.SolidBrush(dataGridView.RowHeadersDefaultCellStyle.ForeColor))
+                {
+                    e.Graphics.DrawString((e.RowIndex + 1).ToString(), dataGridView.RowHeadersDefaultCellStyle.Font, brush, e.RowBounds.Location.X + 20, e.RowBounds.Location.Y + 4);
+                }
+            };
 
 
             // Add more columns as needed
         }
-        private static void selectItemstoCombobox(ComboBox comboBox, int typeID)
+       public static void selectItemstoCombobox(ComboBox comboBox, int typeID)
         {
             // This method is not implemented in the provided code snippet.
             // It seems to be a placeholder for future functionality.
@@ -72,9 +80,23 @@ public class Class1
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while loading items: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-
             }
         }
     }
+    public static class ComboBoxDataProvider
+    {
+        public static DataTable ComboBoxData { get; private set; }
+
+        // Declare the event
+        public static event EventHandler DataChanged;
+
+        public static void LoadData()
+        {
+            // Load or reload your data here
+            ComboBoxData = new DataTable();
+             ConfigureControls.selectItemstoCombobox(new ComboBox(), 1); // Assuming 1 is the typeID you want to use
+            DataChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+
 }
