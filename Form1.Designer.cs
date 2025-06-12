@@ -33,10 +33,12 @@
             iDdataGridView = new DataGridView();
             label1 = new Label();
             panel1 = new Panel();
+            ClearFilterbutton = new Button();
             groupBox1 = new GroupBox();
             deptSearchcomboBox = new ComboBox();
             label2 = new Label();
             NameSearch = new RichTextBox();
+            idPicBox = new PictureBox();
             InvetoryMenu = new MenuStrip();
             menuToolStripMenuItem = new ToolStripMenuItem();
             ItemsToolStripMenuItem = new ToolStripMenuItem();
@@ -46,9 +48,13 @@
             editToolStripMenuItem = new ToolStripMenuItem();
             deleteToolStripMenuItem = new ToolStripMenuItem();
             printStatusToolStripMenuItem = new ToolStripMenuItem();
+            printDialog1 = new PrintDialog();
+            printPreviewDialog1 = new PrintPreviewDialog();
+            printDocument1 = new System.Drawing.Printing.PrintDocument();
             ((System.ComponentModel.ISupportInitialize)iDdataGridView).BeginInit();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)idPicBox).BeginInit();
             InvetoryMenu.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
@@ -63,6 +69,8 @@
             iDdataGridView.RowHeadersWidth = 72;
             iDdataGridView.Size = new Size(1149, 545);
             iDdataGridView.TabIndex = 0;
+            iDdataGridView.CellMouseClick += iDdataGridView_CellMouseClick;
+            iDdataGridView.Click += iDdataGridView_Click;
             // 
             // label1
             // 
@@ -76,12 +84,23 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(ClearFilterbutton);
             panel1.Controls.Add(groupBox1);
-            panel1.Location = new Point(50, 44);
+            panel1.Location = new Point(14, 34);
             panel1.Margin = new Padding(5, 6, 5, 6);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1106, 200);
+            panel1.Size = new Size(804, 216);
             panel1.TabIndex = 3;
+            // 
+            // ClearFilterbutton
+            // 
+            ClearFilterbutton.Location = new Point(225, 163);
+            ClearFilterbutton.Name = "ClearFilterbutton";
+            ClearFilterbutton.Size = new Size(192, 50);
+            ClearFilterbutton.TabIndex = 5;
+            ClearFilterbutton.Text = "Clear Filter";
+            ClearFilterbutton.UseVisualStyleBackColor = true;
+            ClearFilterbutton.Click += ClearFilterbutton_Click;
             // 
             // groupBox1
             // 
@@ -89,7 +108,7 @@
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(NameSearch);
             groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(9, 43);
+            groupBox1.Location = new Point(0, 3);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(801, 154);
             groupBox1.TabIndex = 4;
@@ -125,6 +144,14 @@
             NameSearch.TabIndex = 3;
             NameSearch.Text = "";
             NameSearch.TextChanged += NameSearch_TextChanged;
+            // 
+            // idPicBox
+            // 
+            idPicBox.Location = new Point(876, 39);
+            idPicBox.Name = "idPicBox";
+            idPicBox.Size = new Size(283, 211);
+            idPicBox.TabIndex = 6;
+            idPicBox.TabStop = false;
             // 
             // InvetoryMenu
             // 
@@ -188,12 +215,29 @@
             printStatusToolStripMenuItem.Name = "printStatusToolStripMenuItem";
             printStatusToolStripMenuItem.Size = new Size(191, 36);
             printStatusToolStripMenuItem.Text = "Print Status";
+            printStatusToolStripMenuItem.Click += printStatusToolStripMenuItem_Click;
+            // 
+            // printDialog1
+            // 
+            printDialog1.Document = printDocument1;
+            printDialog1.UseEXDialog = true;
+            // 
+            // printPreviewDialog1
+            // 
+            printPreviewDialog1.AutoScrollMargin = new Size(0, 0);
+            printPreviewDialog1.AutoScrollMinSize = new Size(0, 0);
+            printPreviewDialog1.ClientSize = new Size(400, 300);
+            printPreviewDialog1.Enabled = true;
+            printPreviewDialog1.Icon = (Icon)resources.GetObject("printPreviewDialog1.Icon");
+            printPreviewDialog1.Name = "printPreviewDialog1";
+            printPreviewDialog1.Visible = false;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(12F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1222, 905);
+            Controls.Add(idPicBox);
             Controls.Add(panel1);
             Controls.Add(iDdataGridView);
             Controls.Add(InvetoryMenu);
@@ -203,10 +247,12 @@
             MinimumSize = new Size(1246, 969);
             Name = "Form1";
             Text = "ID CARD INVENTORY";
+            Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)iDdataGridView).EndInit();
             panel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)idPicBox).EndInit();
             InvetoryMenu.ResumeLayout(false);
             InvetoryMenu.PerformLayout();
             contextMenuStrip1.ResumeLayout(false);
@@ -232,5 +278,10 @@
         private ToolStripMenuItem editToolStripMenuItem;
         private ToolStripMenuItem deleteToolStripMenuItem;
         private ToolStripMenuItem printStatusToolStripMenuItem;
+        private Button ClearFilterbutton;
+        private PictureBox idPicBox;
+        private PrintDialog printDialog1;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private PrintPreviewDialog printPreviewDialog1;
     }
 }
