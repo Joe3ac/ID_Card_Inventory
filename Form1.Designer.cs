@@ -35,6 +35,7 @@
             panel1 = new Panel();
             ClearFilterbutton = new Button();
             groupBox1 = new GroupBox();
+            isRefreshbutton = new Button();
             deptSearchcomboBox = new ComboBox();
             label2 = new Label();
             NameSearch = new RichTextBox();
@@ -49,8 +50,8 @@
             deleteToolStripMenuItem = new ToolStripMenuItem();
             printStatusToolStripMenuItem = new ToolStripMenuItem();
             printDialog1 = new PrintDialog();
-            printPreviewDialog1 = new PrintPreviewDialog();
             printDocument1 = new System.Drawing.Printing.PrintDocument();
+            printPreviewDialog1 = new PrintPreviewDialog();
             ((System.ComponentModel.ISupportInitialize)iDdataGridView).BeginInit();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -61,11 +62,13 @@
             // 
             // iDdataGridView
             // 
+            iDdataGridView.AllowUserToDeleteRows = false;
             iDdataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             iDdataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             iDdataGridView.Location = new Point(37, 293);
             iDdataGridView.Margin = new Padding(5, 6, 5, 6);
             iDdataGridView.Name = "iDdataGridView";
+            iDdataGridView.ReadOnly = true;
             iDdataGridView.RowHeadersWidth = 72;
             iDdataGridView.Size = new Size(1149, 545);
             iDdataGridView.TabIndex = 0;
@@ -86,7 +89,7 @@
             // 
             panel1.Controls.Add(ClearFilterbutton);
             panel1.Controls.Add(groupBox1);
-            panel1.Location = new Point(14, 34);
+            panel1.Location = new Point(14, 50);
             panel1.Margin = new Padding(5, 6, 5, 6);
             panel1.Name = "panel1";
             panel1.Size = new Size(804, 216);
@@ -104,6 +107,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(isRefreshbutton);
             groupBox1.Controls.Add(deptSearchcomboBox);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(NameSearch);
@@ -114,6 +118,16 @@
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "SEARCH";
+            // 
+            // isRefreshbutton
+            // 
+            isRefreshbutton.Location = new Point(603, -3);
+            isRefreshbutton.Name = "isRefreshbutton";
+            isRefreshbutton.Size = new Size(192, 50);
+            isRefreshbutton.TabIndex = 6;
+            isRefreshbutton.Text = "Refresh ";
+            isRefreshbutton.UseVisualStyleBackColor = true;
+            isRefreshbutton.Click += isRefreshbutton_Click;
             // 
             // deptSearchcomboBox
             // 
@@ -203,6 +217,7 @@
             editToolStripMenuItem.Name = "editToolStripMenuItem";
             editToolStripMenuItem.Size = new Size(191, 36);
             editToolStripMenuItem.Text = "Edit";
+            editToolStripMenuItem.Click += editToolStripMenuItem_Click;
             // 
             // deleteToolStripMenuItem
             // 
@@ -283,5 +298,6 @@
         private PrintDialog printDialog1;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private PrintPreviewDialog printPreviewDialog1;
+        private Button isRefreshbutton;
     }
 }

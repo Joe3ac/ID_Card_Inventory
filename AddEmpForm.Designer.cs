@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddEmpForm));
             flowLayoutPanel1 = new FlowLayoutPanel();
             label1 = new Label();
             NameTextBox = new RichTextBox();
@@ -54,6 +55,7 @@
             Add_Photo_Bttn = new Button();
             label10 = new Label();
             panel2 = new Panel();
+            isEditbutton = new Button();
             flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)IDpictureBox).BeginInit();
             panel1.SuspendLayout();
@@ -291,7 +293,7 @@
             Saved_button.Name = "Saved_button";
             Saved_button.Size = new Size(206, 78);
             Saved_button.TabIndex = 7;
-            Saved_button.Text = "Save Changes";
+            Saved_button.Text = "Add Details";
             Saved_button.UseVisualStyleBackColor = true;
             Saved_button.Click += Saved_button_Click;
             // 
@@ -327,12 +329,24 @@
             panel2.Size = new Size(535, 102);
             panel2.TabIndex = 10;
             // 
+            // isEditbutton
+            // 
+            isEditbutton.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            isEditbutton.Location = new Point(737, 778);
+            isEditbutton.Name = "isEditbutton";
+            isEditbutton.Size = new Size(257, 78);
+            isEditbutton.TabIndex = 11;
+            isEditbutton.Text = "Save Changes ";
+            isEditbutton.UseVisualStyleBackColor = true;
+            isEditbutton.Click += isEditbutton_Click;
+            // 
             // AddEmpForm
             // 
             AutoScaleDimensions = new SizeF(12F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoValidate = AutoValidate.EnableAllowFocusChange;
             ClientSize = new Size(1075, 927);
+            Controls.Add(isEditbutton);
             Controls.Add(panel2);
             Controls.Add(Saved_button);
             Controls.Add(panel1);
@@ -340,6 +354,7 @@
             Controls.Add(flowLayoutPanel1);
             Controls.Add(label5);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(5, 6, 5, 6);
             Name = "AddEmpForm";
             Text = "Empolyee Details Form";
@@ -382,5 +397,6 @@
         private Panel panel2;
         private Label label11;
         private ComboBox costCenter;
+        private Button isEditbutton;
     }
 }

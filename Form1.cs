@@ -21,11 +21,13 @@ namespace ID_Card_Inventory
             // Load initial data with empty search text and no department selected    
             ApplyLiveFilter(); // Load initial data
             configureImageBox(); // Configure the PictureBox for displaying images
+           // getDataFromSql("", null); // Load data without any filters initially
         }
         private void InitializeControls()
         {
             ConfigureControls.ConfigureDatagridview(iDdataGridView);
             ConfigureControls.selectItemstoCombobox(deptSearchcomboBox, 1); // Assuming 0 is the default typeID, adjust as necessary
+            deptSearchcomboBox.SelectedIndex = -1; // Set the default selected index to -1 (no selection)
         }
 
         private void AddEmployeebutton_Click(object sender, EventArgs e)
@@ -40,40 +42,49 @@ namespace ID_Card_Inventory
             try
             {
                 // Trim whitespace from the search text
-                using SqlConnection sqlConnection = new SqlConnection(connectionString); // Ensure ConnectionString is defined in your project
-                sqlConnection.Open();
-                try
+                using (SqlConnection sqlConnection = new SqlConnection(connectionString)) // Ensure ConnectionString is defined in your project
                 {
-
-                    using (SqlCommand sqlCommand = new SqlCommand("selectEmployeeInfoDetails", sqlConnection))
+                    sqlConnection.Open();
+                    try
                     {
-                        sqlCommand.CommandType = CommandType.StoredProcedure; // Assuming you are using a stored procedure
-                        sqlCommand.Parameters.AddWithValue("@DeptId", (object?)DeptID ?? DBNull.Value); // Use DBNull.Value if no value is selected
-                        sqlCommand.Parameters.AddWithValue("@NameSearch", string.IsNullOrEmpty(searchText) ? DBNull.Value : searchText); // Use Trim to remove any leading/trailing whitespace
+
+                        using (SqlCommand sqlCommand = new SqlCommand("selectEmployeeInfoDetails", sqlConnection))
+                        {
+                            sqlCommand.CommandType = CommandType.StoredProcedure; // Assuming you are using a stored procedure
+                            sqlCommand.Parameters.AddWithValue("@DeptId", (object?)DeptID ?? DBNull.Value); // Use DBNull.Value if no value is selected
+                            sqlCommand.Parameters.AddWithValue("@NameSearch", string.IsNullOrEmpty(searchText) ? DBNull.Value : searchText); // Use Trim to remove any leading/trailing whitespace
 
 
-                        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+                            using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand))
+                            {
 
-                        DataTable dataTable = new DataTable();
-                        sqlDataAdapter.Fill(dataTable);
-                        iDdataGridView.DataSource = dataTable; // Bind the DataTable to the DataGridView
-                        //iDdataGridView.Columns["Id"].Visible = false; // Adjust column header text as needed
+                                DataTable dataTable = new DataTable();
+                                sqlDataAdapter.Fill(dataTable);
+                                iDdataGridView.AutoGenerateColumns = true; // Disable auto-generation of columns
+                                iDdataGridView.DataSource = dataTable; // Bind the DataTable to the DataGridView
+                                                                       //iDdataGridView.Columns["Id"].Visible = false; // Adjust column header text as needed
+                                iDdataGridView.Columns["Id"].Visible = false; // Hide the ID column if not needed
+                                iDdataGridView.Columns["ID Photo"].Visible = false; // Hide the ID Photo column if not needed
+                            }
+
+                        }
+
+
                     }
-
-
+                    catch (SqlException sqlEx)
+                    {
+                        MessageBox.Show($"SQL Error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (InvalidOperationException invOpEx)
+                    {
+                        MessageBox.Show($"Invalid Operation: {invOpEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                catch (SqlException sqlEx)
-                {
-                    MessageBox.Show($"SQL Error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                catch (InvalidOperationException invOpEx)
-                {
-                    MessageBox.Show($"Invalid Operation: {invOpEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+               
 
 
             }
@@ -82,7 +93,7 @@ namespace ID_Card_Inventory
                 MessageBox.Show($"An error occurred while connecting to the database: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void loadData()
+        public void loadData()
         {
             try
             {
@@ -101,7 +112,7 @@ namespace ID_Card_Inventory
 
                         DataTable dataTable = new DataTable();
                         sqlDataAdapter.Fill(dataTable);
-                        iDdataGridView.AutoGenerateColumns = true; // Disable auto-generation of columns
+                        //iDdataGridView.AutoGenerateColumns = true; // Disable auto-generation of columns
                         iDdataGridView.DataSource = dataTable; // Bind the DataTable to the DataGridView
                         iDdataGridView.Columns["Id"].Visible = false;                                       //iDdataGridView.Columns["Id"].Visible = false; // Adjust column header text as needed
                         iDdataGridView.Columns["ID Photo"].Visible = false;
@@ -169,13 +180,17 @@ namespace ID_Card_Inventory
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            loadData();
+            //loadData();
 
         }
 
         private void ClearFilterbutton_Click(object sender, EventArgs e)
         {
-            loadData(); // Reload the data without any filters
+            //loadData(); // Reload the data without any filters
+            NameSearch.Text = string.Empty; // Clear the search text
+            deptSearchcomboBox.SelectedIndex = -1; // Clear the selected department
+            iDdataGridView.ClearSelection(); // Clear any selected rows in the DataGridView
+            ApplyLiveFilter(); // Reload the data with empty search text and no department selected
         }
 
         private void iDdataGridView_Click(object sender, EventArgs e)
@@ -232,9 +247,28 @@ namespace ID_Card_Inventory
         {
 
         }
-         
 
-    
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddEmpForm EmpForm = new AddEmpForm();
+            if (iDdataGridView.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = iDdataGridView.SelectedRows[0];
+                // Assuming you have a method to populate the form with the selected employee's data
+                EmpForm.PopulateFormWithSelectedEmployee(selectedRow);
+                EmpForm.ShowDialog(); // Show the form as a dialog
+            }
+            else
+            {
+                MessageBox.Show("Please select an employee to edit.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
- }
+        }
+
+        private void isRefreshbutton_Click(object sender, EventArgs e)
+        {
+            getDataFromSql("",null); // Reload the data without any filters
+
+        }
+    }
 }

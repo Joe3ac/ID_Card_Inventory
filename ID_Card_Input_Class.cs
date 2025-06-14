@@ -28,7 +28,9 @@ public class Class1
             dataGridView.AutoGenerateColumns = false;
             dataGridView.AllowUserToAddRows = false;
             dataGridView.AllowUserToDeleteRows = false;
+            
             dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView.AutoGenerateColumns = true;
             dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView.BackgroundColor = System.Drawing.Color.White;
             dataGridView.Font = new System.Drawing.Font("Arial", 10, System.Drawing.FontStyle.Regular);
