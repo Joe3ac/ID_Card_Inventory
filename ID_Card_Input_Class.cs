@@ -85,19 +85,14 @@ public class Class1
             }
         }
     }
-    public static class ComboBoxDataProvider
+
+    public static class ComboBoxEventHub
     {
-        public static DataTable ComboBoxData { get; private set; }
+        public static event Action? OnComboBoxDataChanged; // Declared as nullable to resolve CS8618  
 
-        // Declare the event
-        public static event EventHandler DataChanged;
-
-        public static void LoadData()
+        public static void TriggerComboBoxDataChanged()
         {
-            // Load or reload your data here
-            ComboBoxData = new DataTable();
-             ConfigureControls.selectItemstoCombobox(new ComboBox(), 1); // Assuming 1 is the typeID you want to use
-            DataChanged?.Invoke(null, EventArgs.Empty);
+            OnComboBoxDataChanged?.Invoke();
         }
     }
 

@@ -25,10 +25,17 @@ namespace ID_Card_Inventory
             LoadValuestoListBox();
             isButtonEnable(true); // Disable the AddValue button initially
         }
-
         private void ItemsWindow_Load(object sender, EventArgs e)
         {
 
+        }
+        private void AddNewComboOption()
+        {
+            // Insert new data into ComboBoxOptions table
+            
+
+            // Notify all forms to reload their ComboBoxes
+            ComboBoxEventHub.TriggerComboBoxDataChanged();
         }
         private void LoadValuesToDataGridView(int typeID)
         {
@@ -40,10 +47,6 @@ namespace ID_Card_Inventory
                 using SqlConnection con = new SqlConnection(connectionString);
                 {
                     con.Open();
-
-
-
-
                     using SqlCommand cmd = new SqlCommand("ItemsLoadCombobox", con); // Adjust the query based on your database schema
                     {
 
@@ -54,9 +57,6 @@ namespace ID_Card_Inventory
                         DataTable data = new DataTable();
                         dataAdapter.Fill(data);
                         OptionValuedataGridView.AutoGenerateColumns = true;
-
-
-
                         OptionValuedataGridView.DataSource = data;
                         OptionValuedataGridView.Columns["OptionID"].Visible = false;
                         OptionValuedataGridView.Columns["ComboTypeID"].Visible = false;
@@ -75,9 +75,6 @@ namespace ID_Card_Inventory
         }
         private void LoadValuestoListBox()
         {
-
-
-
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -90,7 +87,6 @@ namespace ID_Card_Inventory
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                         DataTable dt = new DataTable();
                         adapter.Fill(dt);
-
                         typeCombolistBox.DisplayMember = "ComboboxName"; // What the user sees
                         typeCombolistBox.ValueMember = "ComboTypeID";     // The ID you want to get
                         typeCombolistBox.DataSource = dt;
@@ -114,8 +110,6 @@ namespace ID_Card_Inventory
                 // Close the form if an error occurs
             }
         }
-
-
         private void typeCombolistBox_Click(object sender, EventArgs e)
         {
             isButtonEnable(false); // Enable the AddValue button when a type is selected
@@ -171,6 +165,7 @@ namespace ID_Card_Inventory
                         }
                         LoadValuesToDataGridView(Convert.ToInt32(typeCombolistBox.SelectedValue)); // Reload the DataGridView
                         MessageBox.Show("Value added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        AddNewComboOption(); // Call the method to add a new combo option
                     }
                     catch (Exception ex)
                     {
@@ -203,6 +198,7 @@ namespace ID_Card_Inventory
             if (MessageBox.Show("Are you sure you want to delete this value?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 ExecuteDeleteQuery(optionID);
+
             }
         }
         private void ExecuteDeleteQuery(int optionID)
@@ -221,6 +217,7 @@ namespace ID_Card_Inventory
                 }
                 LoadValuesToDataGridView(Convert.ToInt32(typeCombolistBox.SelectedValue)); // Reload the DataGridView
                 MessageBox.Show("Value deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                AddNewComboOption(); // Call the method to add a new combo option
             }
             catch (Exception ex)
             {
@@ -231,6 +228,7 @@ namespace ID_Card_Inventory
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var editBox = Interaction.InputBox("Enter the new value:", "Edit Value", OptionValuedataGridView.SelectedRows[0].Cells["ComboValues"].Value?.ToString(), -1, -1);
+            AddNewComboOption();
         }
     }
 }

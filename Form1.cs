@@ -6,8 +6,12 @@ using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
 using Microsoft.Office.Interop.Publisher;
 using Microsoft.VisualBasic;
-using static Class1;
-
+using static Class1.ConfigureControls;
+using static Class1.ComboBoxEventHub;
+using System.Drawing;
+using System.IO; // For MemoryStream
+using System.Linq; // For LINQ operations
+ 
 namespace ID_Card_Inventory
 {
     public partial class Form1 : Form
@@ -16,17 +20,21 @@ namespace ID_Card_Inventory
         public Form1()
         {
             InitializeComponent();
+            // Assuming 0 is the default typeID, adjust as necessary
             InitializeControls();
-            //loadData(); // Load initial data into the DataGridView
-            // Load initial data with empty search text and no department selected    
+            TriggerComboBoxDataChanged(); // Trigger the event to load combo box data 
             ApplyLiveFilter(); // Load initial data
             configureImageBox(); // Configure the PictureBox for displaying images
-           // getDataFromSql("", null); // Load data without any filters initially
+                                 // getDataFromSql("", null); // Load data without any filters initially
+            OnComboBoxDataChanged += () =>
+            {
+                selectItemstoCombobox(deptSearchcomboBox, 1);
+            };
         }
         private void InitializeControls()
         {
-            ConfigureControls.ConfigureDatagridview(iDdataGridView);
-            ConfigureControls.selectItemstoCombobox(deptSearchcomboBox, 1); // Assuming 0 is the default typeID, adjust as necessary
+            ConfigureDatagridview(iDdataGridView);
+           // Assuming 0 is the default typeID, adjust as necessary
             deptSearchcomboBox.SelectedIndex = -1; // Set the default selected index to -1 (no selection)
         }
 
@@ -65,6 +73,9 @@ namespace ID_Card_Inventory
                                                                        //iDdataGridView.Columns["Id"].Visible = false; // Adjust column header text as needed
                                 iDdataGridView.Columns["Id"].Visible = false; // Hide the ID column if not needed
                                 iDdataGridView.Columns["ID Photo"].Visible = false; // Hide the ID Photo column if not needed
+                                iDdataGridView.Columns["DepartmentID"].Visible = false; // Hide the DepartmentID column if not needed
+                                iDdataGridView.Columns["EmploymentStatusID"].Visible = false; // Hide the EmploymentStatusID column if not needed
+                                iDdataGridView.Columns["CostCenter"].Visible = false; // Hide the CostCenter column if not needed
                             }
 
                         }
@@ -84,7 +95,7 @@ namespace ID_Card_Inventory
                         MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-               
+
 
 
             }
@@ -108,14 +119,16 @@ namespace ID_Card_Inventory
                         Command.CommandType = CommandType.StoredProcedure; // Assuming you are using a stored procedure
 
 
-                        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(Command);
+                        using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(Command))
+                        {
 
-                        DataTable dataTable = new DataTable();
-                        sqlDataAdapter.Fill(dataTable);
-                        //iDdataGridView.AutoGenerateColumns = true; // Disable auto-generation of columns
-                        iDdataGridView.DataSource = dataTable; // Bind the DataTable to the DataGridView
-                        iDdataGridView.Columns["Id"].Visible = false;                                       //iDdataGridView.Columns["Id"].Visible = false; // Adjust column header text as needed
-                        iDdataGridView.Columns["ID Photo"].Visible = false;
+                            DataTable dataTable = new DataTable();
+                            sqlDataAdapter.Fill(dataTable);
+                            //iDdataGridView.AutoGenerateColumns = true; // Disable auto-generation of columns
+                            iDdataGridView.DataSource = dataTable; // Bind the DataTable to the DataGridView
+                            iDdataGridView.Columns["Id"].Visible = false;                                       //iDdataGridView.Columns["Id"].Visible = false; // Adjust column header text as needed
+                            iDdataGridView.Columns["ID Photo"].Visible = false;
+                        }
 
                     }
 
@@ -186,11 +199,15 @@ namespace ID_Card_Inventory
 
         private void ClearFilterbutton_Click(object sender, EventArgs e)
         {
+            ClearfilterAndReloadData();
+        }
+        private void ClearfilterAndReloadData()
+        {
             //loadData(); // Reload the data without any filters
             NameSearch.Text = string.Empty; // Clear the search text
             deptSearchcomboBox.SelectedIndex = -1; // Clear the selected department
             iDdataGridView.ClearSelection(); // Clear any selected rows in the DataGridView
-            ApplyLiveFilter(); // Reload the data with empty search text and no department selected
+            ApplyLiveFilter(); // Reload the data with empty search text and no department selected/ Reload the data without any filters
         }
 
         private void iDdataGridView_Click(object sender, EventArgs e)
@@ -219,11 +236,12 @@ namespace ID_Card_Inventory
 
         private void iDdataGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right && e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0 )
             {
                 // Optional: Select the cell that was right-clicked
                 iDdataGridView.ClearSelection();
-                iDdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
+                iDdataGridView.Rows[e.RowIndex].Selected = true;
+                iDdataGridView.CurrentCell = iDdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
                 // Optional: Show a context menu (if you have one)
                 contextMenuStrip1.Show(Cursor.Position);
@@ -250,13 +268,21 @@ namespace ID_Card_Inventory
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddEmpForm EmpForm = new AddEmpForm();
+
             if (iDdataGridView.SelectedRows.Count > 0)
             {
+                AddEmpForm EmpForm = new AddEmpForm();
                 DataGridViewRow selectedRow = iDdataGridView.SelectedRows[0];
                 // Assuming you have a method to populate the form with the selected employee's data
                 EmpForm.PopulateFormWithSelectedEmployee(selectedRow);
                 EmpForm.ShowDialog(); // Show the form as a dialog
+                if (EmpForm.DialogResult == DialogResult.OK)
+                {
+
+                    // Reload the data after editing
+                    // Refresh the DataGridView with updated data
+                    ClearfilterAndReloadData();
+                }
             }
             else
             {
@@ -267,8 +293,46 @@ namespace ID_Card_Inventory
 
         private void isRefreshbutton_Click(object sender, EventArgs e)
         {
-            getDataFromSql("",null); // Reload the data without any filters
+            ClearfilterAndReloadData(); // Reload the data without any filters
 
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(iDdataGridView.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = iDdataGridView.SelectedRows[0];
+                //string firname = selectedRow.Cells["FirstName"].Value.ToString(); // Assuming "FirstName" is the column name for the employee's first name
+                int employeeId = Convert.ToInt32(selectedRow.Cells["Id"].Value); // Assuming "Id" is the column name for the employee ID
+                // Confirm deletion
+                DialogResult result = MessageBox.Show($"Are you sure you want to delete employee details?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                        {
+                            sqlConnection.Open();
+                            using (SqlCommand sqlCommand = new SqlCommand("isDeleteEmployeeInfo", sqlConnection)) // Assuming you have a stored procedure for deletion
+                            {
+                                sqlCommand.CommandType = CommandType.StoredProcedure;
+                                sqlCommand.Parameters.AddWithValue("@SelectedID", employeeId);
+                                sqlCommand.ExecuteNonQuery();
+                            }
+                        }
+                        MessageBox.Show("Employee deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ClearfilterAndReloadData(); // Reload the data after deletion
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"An error occurred while deleting the employee: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an employee to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

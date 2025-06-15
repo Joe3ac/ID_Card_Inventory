@@ -10,6 +10,7 @@ namespace ID_Card_Inventory
   public class ID_CardInventory_CLass
     {
         public string Name { get; set; }
+        
         public string Surnmae { get; set; }
         public string ID_Number { get; set; }
         public int Department { get; set; }

@@ -6,29 +6,46 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates; // Assuming you are using SQL Server for database operations
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
- using Microsoft.Data.SqlClient; // Assuming you are using SQL Server for database operations
-using System.Security.Cryptography.X509Certificates; // Assuming you are using SQL Server for database operations
-using static Class1;
 using ID_Card_Inventory.Properties; // Assuming you have a class named ConfigureControls with the method ConfigureDatagridview
+ using Microsoft.Data.SqlClient; // Assuming you are using SQL Server for database operations
+using static Class1.ConfigureControls;
+using static Class1.ComboBoxEventHub;
 namespace ID_Card_Inventory
 {
     public partial class AddEmpForm : Form
     {
+        public int employeeId { get; set; } // Assuming this is the ID of the employee being edited
         private string connectionString = ConfigurationManager.ConnectionStrings["InventoryDB"].ConnectionString; // Replace with your actual connection string
         public AddEmpForm()
         {
             InitializeComponent();
+            OnComboBoxDataChanged += () =>
+            {
+                selectItemstoCombobox(DeptMent_comboBox, 1); // Assuming 1 is the typeID for departments
+                selectItemstoCombobox(costCenter, 2); // Assuming 2 is the typeID for cost centers
+                selectItemstoCombobox(EmploymentStatus_Combo, 3); // Assuming 3 is the typeID for employment statuses
+            };
+            // Subscribe to the event to load combobox items when the form is initialized
+             //TriggerComboBoxDataChanged(); // Load combobox items when the form is initialized
+            configureImageBox();
             LoadCombox(); // Load the combobox items when the form is initialized
         }
         private void LoadCombox()
-        {
-            ConfigureControls.selectItemstoCombobox(DeptMent_comboBox, 1); // Assuming 1 is the typeID for departments
-            ConfigureControls.selectItemstoCombobox(costCenter, 2); // Assuming 2 is the typeID for cost centers
-            ConfigureControls.selectItemstoCombobox(EmploymentStatus_Combo, 3); // Assuming 3 is the typeID for employment statuses
+        { 
+           
+           
             isButtonActive(true); // Enable the buttons when the form is initialized
+        }
+        private void configureImageBox()
+        {
+            // Configure the PictureBox to display images
+            IDpictureBox.SizeMode = PictureBoxSizeMode.StretchImage; // Adjust the size mode as needed
+            IDpictureBox.BorderStyle = BorderStyle.FixedSingle; // Optional: Add a border to the PictureBox
+            IDpictureBox.BackColor = Color.LightGray; // Optional: Set a background color for better visibility
         }
 
         private void Add_Photo_Bttn_Click(object sender, EventArgs e)
@@ -152,21 +169,30 @@ namespace ID_Card_Inventory
                         command.Parameters.AddWithValue("@dateofissue", idCard.Date_Of_Issue); // Assuming dateOfIssue is a DateTimePicker
                         command.Parameters.AddWithValue("@costCenter", idCard.costCenter); // Assuming costCenter is an integer
                         command.Parameters.AddWithValue("@EmploymentstatusID", idCard.employementStatus); // Assuming employementStatus is an integer
+                        if (Procedure=="EditDetails")
+                        {
+                            command.Parameters.AddWithValue("@ID",employeeId); // Assuming ID_Number is the unique identifier for the employee
+                        }
 
-                        // If you have an image, you can convert it to a byte array and add it as a parameter
+
                         if (IDpictureBox.Image != null)
                         {
                             using (MemoryStream ms = new MemoryStream())
                             {
-                                IDpictureBox.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                using (Bitmap bmp = new Bitmap(IDpictureBox.Image))
+                                {
+                                    bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                }
+
                                 byte[] imageBytes = ms.ToArray();
                                 command.Parameters.AddWithValue("@IDPhoto", imageBytes);
                             }
                         }
                         else
                         {
-                            command.Parameters.AddWithValue("@IDPhoto", DBNull.Value); // Handle case where no photo is provided
+                            command.Parameters.AddWithValue("@IDPhoto", DBNull.Value);
                         }
+                         
                         command.ExecuteNonQuery(); // Execute the query
 
                     }
@@ -179,36 +205,63 @@ namespace ID_Card_Inventory
             }
 
         }
-        public void PopulateFormWithSelectedEmployee(DataGridViewRow selectedRow)
+        private void ClearFormFields()
         {
             // This method is not implemented in the provided code snippet.
             // It seems to be a placeholder for future functionality.
+            // You can implement it to clear the form fields after saving or editing employee details.
+            NameTextBox.Clear();
+            SurnameTextBox.Clear();
+            IDNumTextBox.Clear();
+            DeptMent_comboBox.SelectedIndex = -1; // Clear the selected item in the combobox
+            PositionTextbox.Clear();
+            dateOfIssue.Value = DateTime.Now; // Reset to current date
+            costCenter.SelectedIndex = -1; // Clear the selected item in the combobox
+            EmploymentStatus_Combo.SelectedIndex = -1; // Clear the selected item in the combobox
+            IDpictureBox.Image = null; // Clear the image
+        }
+        public void PopulateFormWithSelectedEmployee(DataGridViewRow dRow)
+        {
+             
+            // This method is not implemented in the provided code snippet.
+            // It seems to be a placeholder for future functionality.
             // You can implement it to populate the form with the selected employee's details.
+            ClearFormFields();
             isButtonActive(false);
-            if (selectedRow != null)
+            if ( dRow != null)
             {
                 try
                 {
-                    NameTextBox.Text = selectedRow.Cells["First Name"].Value.ToString();
-                    SurnameTextBox.Text = selectedRow.Cells["Surname"].Value.ToString();
-                    IDNumTextBox.Text = selectedRow.Cells["Employee Number"].Value.ToString();
-                    DeptMent_comboBox.SelectedValue = Convert.ToInt32(selectedRow.Cells["DepartmentID"].Value);
-                    PositionTextbox.Text = selectedRow.Cells["Position"].Value.ToString();
-                    dateOfIssue.Value = Convert.ToDateTime(selectedRow.Cells["Date Of Issue"].Value);
-                    costCenter.SelectedValue = Convert.ToInt32(selectedRow.Cells["Cost Center"].Value);
-                    EmploymentStatus_Combo.SelectedValue = Convert.ToInt32(selectedRow.Cells["EmploymentstatusID"].Value);
+                    employeeId = Convert.ToInt32(dRow.Cells["Id"].Value);
+                    NameTextBox.Text = dRow.Cells["First Name"].Value.ToString();
+                    SurnameTextBox.Text = dRow.Cells["Surname"].Value.ToString();
+                    IDNumTextBox.Text = dRow.Cells["Employee Number"].Value.ToString();
+                    DeptMent_comboBox.SelectedValue = Convert.ToInt32(dRow.Cells["DepartmentID"].Value);
+                    PositionTextbox.Text = dRow.Cells["Position"].Value.ToString();
+                    dateOfIssue.Value = Convert.ToDateTime(dRow.Cells["Date Of Issue"].Value);
+                    costCenter.SelectedValue = Convert.ToInt32(dRow.Cells["CostCenter"].Value);
+                    EmploymentStatus_Combo.SelectedValue = Convert.ToInt32(dRow.Cells["EmploymentStatusID"].Value);
                     // Assuming you have a method to load the image from a byte array
-                    if (selectedRow.Cells["IDPhoto"].Value != DBNull.Value)
+                    if (dRow.Cells["ID Photo"].Value != DBNull.Value)
                     {
-                        byte[] imageBytes = (byte[])selectedRow.Cells["IDPhoto"].Value;
-                        using (MemoryStream ms = new MemoryStream(imageBytes))
+                        try
                         {
-                            IDpictureBox.Image = Image.FromStream(ms);
+                            byte[] imageBytes = (byte[])dRow.Cells["ID Photo"].Value;
+                            using (MemoryStream ms = new MemoryStream(imageBytes))
+                            {
+                                IDpictureBox.Image = Image.FromStream(ms);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error loading image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            IDpictureBox.Image = Properties.Resources.icons8_no_image_50; // Use a default image if loading fails
                         }
                     }
                     else
                     {
-                        IDpictureBox.Image = Properties.Resources.icons8_no_image_50; // Handle case where no photo is provided
+                        Image defaultImage = Properties.Resources.icons8_no_image_50; // Use a default image if no photo is provided
+                        IDpictureBox.Image = defaultImage; // Handle case where no photo is provided
                     }
                 }
                 catch (Exception ex)
@@ -230,7 +283,19 @@ namespace ID_Card_Inventory
 
         private void isEditbutton_Click(object sender, EventArgs e)
         {
-            ExecuteSQLQuery("UpdateDetails");
+            var isValidForUpdate = isInputsValid();
+            if (isValidForUpdate != null)
+            {
+                ExecuteSQLQuery("EditDetails");
+                MessageBox.Show("Employee details updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            else
+            {
+                MessageBox.Show("Failed to update employee details. Please check your inputs.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+            }
         }
     }
 }
