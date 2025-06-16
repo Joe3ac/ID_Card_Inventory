@@ -1,16 +1,16 @@
 using System.Configuration;
 using System.Data;
+using System.Drawing;
+using System.IO; // For MemoryStream
+using System.Linq; // For LINQ operations
 using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
 using Microsoft.Office.Interop.Publisher;
 using Microsoft.VisualBasic;
-using static Class1.ConfigureControls;
 using static Class1.ComboBoxEventHub;
-using System.Drawing;
-using System.IO; // For MemoryStream
-using System.Linq; // For LINQ operations
+using static Class1.ConfigureControls;
  
 namespace ID_Card_Inventory
 {
@@ -77,6 +77,7 @@ namespace ID_Card_Inventory
                                 iDdataGridView.Columns["EmploymentStatusID"].Visible = false; // Hide the EmploymentStatusID column if not needed
                                 iDdataGridView.Columns["CostCenter"].Visible = false; // Hide the CostCenter column if not needed
                             }
+
 
                         }
 
@@ -194,6 +195,7 @@ namespace ID_Card_Inventory
         private void Form1_Load(object sender, EventArgs e)
         {
             //loadData();
+           TriggerComboBoxDataChanged();
 
         }
 

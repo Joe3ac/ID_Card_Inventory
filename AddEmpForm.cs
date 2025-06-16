@@ -30,14 +30,14 @@ namespace ID_Card_Inventory
                 selectItemstoCombobox(EmploymentStatus_Combo, 3); // Assuming 3 is the typeID for employment statuses
             };
             // Subscribe to the event to load combobox items when the form is initialized
-             //TriggerComboBoxDataChanged(); // Load combobox items when the form is initialized
+            //TriggerComboBoxDataChanged(); // Load combobox items when the form is initialized
             configureImageBox();
             LoadCombox(); // Load the combobox items when the form is initialized
         }
         private void LoadCombox()
-        { 
-           
-           
+        {
+
+
             isButtonActive(true); // Enable the buttons when the form is initialized
         }
         private void configureImageBox()
@@ -112,7 +112,7 @@ namespace ID_Card_Inventory
             Image image = IDpictureBox.Image; // Assuming you want to store the photo as an Image object
             if (image == null)
             {
-                  image = Resources.icons8_no_image_50; // Use a default image if no photo is provided
+                image = Resources.icons8_no_image_50; // Use a default image if no photo is provided
                 IDpictureBox.Image = image; // Set the default image in the PictureBox
 
             }
@@ -169,9 +169,9 @@ namespace ID_Card_Inventory
                         command.Parameters.AddWithValue("@dateofissue", idCard.Date_Of_Issue); // Assuming dateOfIssue is a DateTimePicker
                         command.Parameters.AddWithValue("@costCenter", idCard.costCenter); // Assuming costCenter is an integer
                         command.Parameters.AddWithValue("@EmploymentstatusID", idCard.employementStatus); // Assuming employementStatus is an integer
-                        if (Procedure=="EditDetails")
+                        if (Procedure == "EditDetails")
                         {
-                            command.Parameters.AddWithValue("@ID",employeeId); // Assuming ID_Number is the unique identifier for the employee
+                            command.Parameters.AddWithValue("@ID", employeeId); // Assuming ID_Number is the unique identifier for the employee
                         }
 
 
@@ -192,7 +192,7 @@ namespace ID_Card_Inventory
                         {
                             command.Parameters.AddWithValue("@IDPhoto", DBNull.Value);
                         }
-                         
+
                         command.ExecuteNonQuery(); // Execute the query
 
                     }
@@ -222,13 +222,13 @@ namespace ID_Card_Inventory
         }
         public void PopulateFormWithSelectedEmployee(DataGridViewRow dRow)
         {
-             
+
             // This method is not implemented in the provided code snippet.
             // It seems to be a placeholder for future functionality.
             // You can implement it to populate the form with the selected employee's details.
             ClearFormFields();
             isButtonActive(false);
-            if ( dRow != null)
+            if (dRow != null)
             {
                 try
                 {
@@ -296,6 +296,11 @@ namespace ID_Card_Inventory
 
 
             }
+        }
+
+        private void AddEmpForm_Load(object sender, EventArgs e)
+        {
+            TriggerComboBoxDataChanged(); // Load combobox items when the form is loaded
         }
     }
 }

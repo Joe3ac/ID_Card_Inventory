@@ -358,6 +358,7 @@
             Margin = new Padding(5, 6, 5, 6);
             Name = "AddEmpForm";
             Text = "Empolyee Details Form";
+            Load += AddEmpForm_Load;
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)IDpictureBox).EndInit();
