@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace GithubUpdates
+namespace ID_Card_Inventory.GithubUpdates
 {
     public class UpdateChecker
     {
