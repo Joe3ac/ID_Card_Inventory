@@ -73,7 +73,7 @@ namespace ID_Card_Inventory
                                                                        //iDdataGridView.Columns["Id"].Visible = false; // Adjust column header text as needed
                                 iDdataGridView.Columns["Id"].Visible = false; // Hide the ID column if not needed
                                 iDdataGridView.Columns["ID Photo"].Visible = false; // Hide the ID Photo column if not needed
-                                iDdataGridView.Columns["DepartmentID"].Visible = false; // Hide the DepartmentID column if not needed
+                                iDdataGridView.Columns["Department"].Visible = false; // Hide the DepartmentID column if not needed
                                 iDdataGridView.Columns["EmploymentStatusID"].Visible = false; // Hide the EmploymentStatusID column if not needed
                                 iDdataGridView.Columns["CostCenter"].Visible = false; // Hide the CostCenter column if not needed
                             }
