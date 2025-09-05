@@ -61,3 +61,6 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+*.application application/x-ms-application
+*.manifest application/x-ms-manifest
+*.deploy application/octet-stream
