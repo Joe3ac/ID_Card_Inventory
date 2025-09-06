@@ -22,6 +22,7 @@ namespace ID_Card_Inventory
         {
             InitializeComponent();
             // Check for updates on startup
+            EditPhotoButton.Enabled = false;
              
             InitializeControls();
             TriggerComboBoxDataChanged(); // Trigger the event to load combo box data 
@@ -224,9 +225,15 @@ namespace ID_Card_Inventory
                 var idCardImage = selectedRow.Cells["ID Photo"].Value as byte[]; // Assuming "ID Photo" is the column name for the image
                 if (idCardImage != null && idCardImage.Length > 0)
                 {
+                    EditPhotoButton.Enabled = true;
                     using (MemoryStream ms = new MemoryStream(idCardImage))
                     {
                         idPicBox.Image = Image.FromStream(ms); // Display the image in the PictureBox
+                    }
+                    var setIDValue = new PostResponse
+                    {
+                        getIDNum = Convert.ToInt32(selectedRow)
+
                     }
                 }
                 else

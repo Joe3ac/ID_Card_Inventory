@@ -264,6 +264,7 @@
             EditPhotoButton.TabIndex = 6;
             EditPhotoButton.Text = "Edit ID Photo";
             EditPhotoButton.UseVisualStyleBackColor = true;
+            
             // 
             // Form1
             // 
