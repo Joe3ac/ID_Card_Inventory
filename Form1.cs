@@ -22,20 +22,7 @@ namespace ID_Card_Inventory
         {
             InitializeComponent();
             // Check for updates on startup
-            UpdateChecker.GetLatestReleaseTagAsync().ContinueWith(task =>
-              {
-              var latestTag = task.Result;
-              if (latestTag != null)
-              {
-                      //          // Assuming you have a method to get the current version of your application
-                      var currentVersion = System.Windows.Forms.Application.ProductVersion; // Example: "1.0.0"
-                      if (latestTag != currentVersion)
-                      {
-                          MessageBox.Show($"A new version ({latestTag}) is available! You are using version {currentVersion}. Please update to the latest version.", "Update Available", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                      }
-                  }
-              }, TaskScheduler.FromCurrentSynchronizationContext()); // Ensure continuation runs on the UI thread
-                                                                     // Assuming 0 is the default typeID, adjust as necessary
+             
             InitializeControls();
             TriggerComboBoxDataChanged(); // Trigger the event to load combo box data 
             ApplyLiveFilter(); // Load initial data
