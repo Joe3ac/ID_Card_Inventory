@@ -11,7 +11,7 @@ using Microsoft.Office.Interop.Publisher;
 using Microsoft.VisualBasic;
 using static Class1.ComboBoxEventHub;
 using static Class1.ConfigureControls;
-using ID_Card_Inventory.GithubUpdates;
+ 
  
 namespace ID_Card_Inventory
 {
