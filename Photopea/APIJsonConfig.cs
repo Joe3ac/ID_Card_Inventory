@@ -6,17 +6,63 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-usin
+using Microsoft.Data.SqlClient;
+using System.Configuration;
+using System.Data;
 
 
 namespace ID_Card_Inventory.Photopea
 {
    public class PhotopeaConfig
     {
-        public string connectionString = ConfigurationManager.ConnectionStrings["InventoryDB"].ConnectionString;
+        public string _connectionString = ConfigurationManager.ConnectionStrings["InventoryDB"].ConnectionString;
 
         private static byte[] LoadImage(int IDNum)
-        { 
+        {
+            try
+            {
+                using (SqlConnection _connectSQL = new SqlConnection(_connectionionString))
+                {
+                    _connectSQL.Open;
+                    try
+                    {
+                        using (SqlCommand command = new SqlCommand("SelectIDPhoto", _connectSQL))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@IdNum", IDNum);
+                        }
+
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        MessageBox.Show($"SQL Error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (InvalidOperationException invOpEx)
+                    {
+                        MessageBox.Show($"Invalid Operation: {invOpEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
+
+
+
+            }
+             catch (SqlException sqlEx)
+                    {
+                        MessageBox.Show($"SQL Error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+             catch (InvalidOperationException invOpEx)
+                    {
+                        MessageBox.Show($"Invalid Operation: {invOpEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+            catch (Exception ex)
+                    {
+                        MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
         }
 
@@ -26,6 +72,7 @@ namespace ID_Card_Inventory.Photopea
             var SetImage = new PostResponse(); // Replace with actual DB fetch
             
             int photoId = SetImage.getIDNum;
+            var imageBytes = LoadImage(photoId);
 
             // Step 2: Save to temp file (for local testing we pretend it’s hosted)
             string tempPath = Path.Combine(Path.GetTempPath(), "photopea_input.png");
