@@ -33,6 +33,7 @@
             iDdataGridView = new DataGridView();
             label1 = new Label();
             panel1 = new Panel();
+            EditPhotoButton = new Button();
             ClearFilterbutton = new Button();
             groupBox1 = new GroupBox();
             isRefreshbutton = new Button();
@@ -52,7 +53,6 @@
             printDialog1 = new PrintDialog();
             printDocument1 = new System.Drawing.Printing.PrintDocument();
             printPreviewDialog1 = new PrintPreviewDialog();
-            EditPhotoButton = new Button();
             ((System.ComponentModel.ISupportInitialize)iDdataGridView).BeginInit();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -96,10 +96,21 @@
             panel1.Size = new Size(536, 144);
             panel1.TabIndex = 3;
             // 
+            // EditPhotoButton
+            // 
+            EditPhotoButton.Location = new Point(330, 109);
+            EditPhotoButton.Margin = new Padding(2);
+            EditPhotoButton.Name = "EditPhotoButton";
+            EditPhotoButton.Size = new Size(128, 33);
+            EditPhotoButton.TabIndex = 6;
+            EditPhotoButton.Text = "Edit ID Photo";
+            EditPhotoButton.UseVisualStyleBackColor = true;
+            EditPhotoButton.Click += EditPhotoButton_Click;
+            // 
             // ClearFilterbutton
             // 
             ClearFilterbutton.Location = new Point(150, 109);
-            ClearFilterbutton.Margin = new Padding(2, 2, 2, 2);
+            ClearFilterbutton.Margin = new Padding(2);
             ClearFilterbutton.Name = "ClearFilterbutton";
             ClearFilterbutton.Size = new Size(128, 33);
             ClearFilterbutton.TabIndex = 5;
@@ -115,9 +126,9 @@
             groupBox1.Controls.Add(NameSearch);
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(0, 2);
-            groupBox1.Margin = new Padding(2, 2, 2, 2);
+            groupBox1.Margin = new Padding(2);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(2, 2, 2, 2);
+            groupBox1.Padding = new Padding(2);
             groupBox1.Size = new Size(534, 103);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
@@ -126,7 +137,7 @@
             // isRefreshbutton
             // 
             isRefreshbutton.Location = new Point(402, -2);
-            isRefreshbutton.Margin = new Padding(2, 2, 2, 2);
+            isRefreshbutton.Margin = new Padding(2);
             isRefreshbutton.Name = "isRefreshbutton";
             isRefreshbutton.Size = new Size(128, 33);
             isRefreshbutton.TabIndex = 6;
@@ -138,7 +149,7 @@
             // 
             deptSearchcomboBox.FormattingEnabled = true;
             deptSearchcomboBox.Location = new Point(340, 57);
-            deptSearchcomboBox.Margin = new Padding(2, 2, 2, 2);
+            deptSearchcomboBox.Margin = new Padding(2);
             deptSearchcomboBox.Name = "deptSearchcomboBox";
             deptSearchcomboBox.Size = new Size(173, 28);
             deptSearchcomboBox.TabIndex = 5;
@@ -167,7 +178,7 @@
             // idPicBox
             // 
             idPicBox.Location = new Point(584, 26);
-            idPicBox.Margin = new Padding(2, 2, 2, 2);
+            idPicBox.Margin = new Padding(2);
             idPicBox.Name = "idPicBox";
             idPicBox.Size = new Size(189, 141);
             idPicBox.TabIndex = 6;
@@ -254,17 +265,6 @@
             printPreviewDialog1.Icon = (Icon)resources.GetObject("printPreviewDialog1.Icon");
             printPreviewDialog1.Name = "printPreviewDialog1";
             printPreviewDialog1.Visible = false;
-            // 
-            // EditPhotoButton
-            // 
-            EditPhotoButton.Location = new Point(330, 109);
-            EditPhotoButton.Margin = new Padding(2);
-            EditPhotoButton.Name = "EditPhotoButton";
-            EditPhotoButton.Size = new Size(128, 33);
-            EditPhotoButton.TabIndex = 6;
-            EditPhotoButton.Text = "Edit ID Photo";
-            EditPhotoButton.UseVisualStyleBackColor = true;
-            
             // 
             // Form1
             // 

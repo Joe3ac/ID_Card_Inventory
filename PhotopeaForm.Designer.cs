@@ -52,6 +52,7 @@
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Name = "PhotopeaForm";
             Text = "PhotopeaForm";
+            Load += PhotopeaForm_Load;
             ((System.ComponentModel.ISupportInitialize)PhotopeaWebView).EndInit();
             ResumeLayout(false);
         }

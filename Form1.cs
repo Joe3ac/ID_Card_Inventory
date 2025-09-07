@@ -23,7 +23,7 @@ namespace ID_Card_Inventory
             InitializeComponent();
             // Check for updates on startup
             EditPhotoButton.Enabled = false;
-             
+
             InitializeControls();
             TriggerComboBoxDataChanged(); // Trigger the event to load combo box data 
             ApplyLiveFilter(); // Load initial data
@@ -37,7 +37,7 @@ namespace ID_Card_Inventory
         private void InitializeControls()
         {
             ConfigureDatagridview(iDdataGridView);
-           // Assuming 0 is the default typeID, adjust as necessary
+            // Assuming 0 is the default typeID, adjust as necessary
             deptSearchcomboBox.SelectedIndex = -1; // Set the default selected index to -1 (no selection)
         }
 
@@ -198,7 +198,7 @@ namespace ID_Card_Inventory
         private void Form1_Load(object sender, EventArgs e)
         {
             //loadData();
-           TriggerComboBoxDataChanged();
+            TriggerComboBoxDataChanged();
 
         }
 
@@ -222,19 +222,23 @@ namespace ID_Card_Inventory
             if (iDdataGridView.SelectedRows.Count > 0)
             {
                 DataGridViewRow selectedRow = iDdataGridView.SelectedRows[0];
+                int employeeId = Convert.ToInt32(selectedRow.Cells["Id"].Value);
                 var idCardImage = selectedRow.Cells["ID Photo"].Value as byte[]; // Assuming "ID Photo" is the column name for the image
                 if (idCardImage != null && idCardImage.Length > 0)
                 {
                     EditPhotoButton.Enabled = true;
                     using (MemoryStream ms = new MemoryStream(idCardImage))
-                    {
+                    { 
                         idPicBox.Image = Image.FromStream(ms); // Display the image in the PictureBox
                     }
                     var setIDValue = new PostResponse
                     {
-                        getIDNum = Convert.ToInt32(selectedRow)
+                        
+                        getIDNum = employeeId,
+                        
 
-                    }
+
+                    };
                 }
                 else
                 {
@@ -247,7 +251,7 @@ namespace ID_Card_Inventory
 
         private void iDdataGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right && e.RowIndex >= 0 )
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
             {
                 // Optional: Select the cell that was right-clicked
                 iDdataGridView.ClearSelection();
@@ -310,7 +314,7 @@ namespace ID_Card_Inventory
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(iDdataGridView.SelectedRows.Count > 0)
+            if (iDdataGridView.SelectedRows.Count > 0)
             {
                 DataGridViewRow selectedRow = iDdataGridView.SelectedRows[0];
                 //string firname = selectedRow.Cells["FirstName"].Value.ToString(); // Assuming "FirstName" is the column name for the employee's first name
@@ -344,6 +348,13 @@ namespace ID_Card_Inventory
             {
                 MessageBox.Show("Please select an employee to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void EditPhotoButton_Click(object sender, EventArgs e)
+        {
+            PhotopeaForm photopeaForm = new PhotopeaForm();
+            photopeaForm.Show();
+            this.Hide();
         }
     }
 }
