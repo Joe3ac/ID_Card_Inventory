@@ -15,55 +15,77 @@ namespace ID_Card_Inventory.Photopea
 {
    public class PhotopeaConfig
     {
-        public string _connectionString = ConfigurationManager.ConnectionStrings["InventoryDB"].ConnectionString;
+        private static string _connectionString = ConfigurationManager.ConnectionStrings["InventoryDB"].ConnectionString;
+        //private string _connectionString;
 
-        private static byte[] LoadImage(int IDNum)
+        //public PhotopeaConfig(string connectionString)
+        //{
+        //    _connectionString = connectionString;
+        //}
+
+        public static byte[] LoadImage(int IDNum)
         {
             try
             {
-                using (SqlConnection _connectSQL = new SqlConnection(_connectionionString))
+                using (SqlConnection _connectSQL = new SqlConnection(_connectionString))
                 {
-                    _connectSQL.Open;
-                    try
-                    {
+                    _connectSQL.Open();
+                    //try
+                    //{
                         using (SqlCommand command = new SqlCommand("SelectIDPhoto", _connectSQL))
                         {
                             command.CommandType = CommandType.StoredProcedure;
                             command.Parameters.AddWithValue("@IdNum", IDNum);
+                            object result = command.ExecuteScalar();
+                            if (result != null && result != DBNull.Value)
+                            {
+                                byte[] imageBytes = (byte[])result;
+                                return imageBytes;
+                            }
+                            else
+                            {
+                                throw new Exception("No image found for the provided ID number.");
+                            }
+                         
                         }
-
-                    }
-                    catch (SqlException sqlEx)
-                    {
-                        MessageBox.Show($"SQL Error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    catch (InvalidOperationException invOpEx)
-                    {
-                        MessageBox.Show($"Invalid Operation: {invOpEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                        
+                    //}
+                    //catch (SqlException sqlEx)
+                    //{
+                    //    MessageBox.Show($"SQL Error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //}
+                    //catch (InvalidOperationException invOpEx)
+                    //{
+                    //    MessageBox.Show($"Invalid Operation: {invOpEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //}
+                    //finally
+                    //{
+                       
+                    //}
                 }
 
 
 
 
             }
-             catch (SqlException sqlEx)
-                    {
-                        MessageBox.Show($"SQL Error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-             catch (InvalidOperationException invOpEx)
-                    {
-                        MessageBox.Show($"Invalid Operation: {invOpEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show($"SQL Error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (InvalidOperationException invOpEx)
+            {
+                MessageBox.Show($"Invalid Operation: {invOpEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (Exception ex)
-                    {
-                        MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+            }
+            return null;
         }
 
         public static async Task OpenInPhotopeaAsync(Microsoft.Web.WebView2.WinForms.WebView2 webView)
@@ -72,7 +94,7 @@ namespace ID_Card_Inventory.Photopea
             var SetImage = new PostResponse(); // Replace with actual DB fetch
             
             int photoId = SetImage.getIDNum;
-            var imageBytes = LoadImage(photoId);
+           byte[] imageBytes = LoadImage(photoId);
 
             // Step 2: Save to temp file (for local testing we pretend it’s hosted)
             string tempPath = Path.Combine(Path.GetTempPath(), "photopea_input.png");
