@@ -22,7 +22,7 @@ namespace ID_Card_Inventory.Photopea
         //{
         //    _connectionString = connectionString;
         //}
-
+        private static class M
         public static byte[] LoadImage(int IDNum)
         {
             try
