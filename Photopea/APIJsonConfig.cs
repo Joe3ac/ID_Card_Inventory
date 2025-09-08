@@ -22,7 +22,16 @@ namespace ID_Card_Inventory.Photopea
         //{
         //    _connectionString = connectionString;
         //}
-        private static class M
+        private static int _setID;
+        public static void SetSelectedID (int id)
+        {
+            _setID = id;
+
+        }
+        public static int GetSelectedID()
+        {
+            return _setID;
+        }
         public static byte[] LoadImage(int IDNum)
         {
             try

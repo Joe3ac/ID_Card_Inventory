@@ -17,7 +17,13 @@ using static Class1.ConfigureControls;
     public class PostResponse
     {
         public int getIDNum{get; set;}
+
+        public PostResponse(int _ID)
+        {
+            getIDNum = _ID;
+        }
          
 
     }
+    
  }
