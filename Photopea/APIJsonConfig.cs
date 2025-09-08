@@ -49,23 +49,7 @@ namespace ID_Card_Inventory.Photopea
                          
                         }
                         
-                    //}
-                    //catch (SqlException sqlEx)
-                    //{
-                    //    MessageBox.Show($"SQL Error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //}
-                    //catch (InvalidOperationException invOpEx)
-                    //{
-                    //    MessageBox.Show($"Invalid Operation: {invOpEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //}
-                    //finally
-                    //{
-                       
-                    //}
+                    
                 }
 
 
