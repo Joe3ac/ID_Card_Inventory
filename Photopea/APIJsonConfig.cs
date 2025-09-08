@@ -119,8 +119,35 @@ namespace ID_Card_Inventory.Photopea
             // Step 3: Build JSON config
             var cfg = new
             {
-                files = new[] { hostedUrl },
-                environment = new { theme = "dark" }
+                files = new[]
+        {
+            hostedUrl,
+            "https://www.mysite.com/images/button.png",   // example
+            "data:image/png;base64," + Convert.ToBase64String(imageBytes) // inline fallback
+        },
+        resources = new[]
+        {
+            "https://www.xyz.com/brushes/Nature.ABR",
+            "https://www.xyz.com/grads/Gradients.GRD",
+            "https://www.xyz.com/fonts/NewFont.otf"
+        },
+        server = new
+        {
+            version = 1,
+            url = "https://www.myserver.com/saveImage.php",
+            formats = new[] { "psd:true", "png", "jpg:0.5" }
+        },
+        environment = new
+        {
+            theme = "dark",
+            lang = "en",
+            uiScale = 1.0
+        },
+        apis = new
+        {
+            dezgo = "d4e5f6"
+        },
+        script = "app.activeDocument.rotateCanvas(90);" // Example script
             };
             string json = JsonSerializer.Serialize(cfg, new JsonSerializerOptions
             {
