@@ -84,10 +84,10 @@ namespace ID_Card_Inventory.Photopea
         public static async Task OpenInPhotopeaAsync(Microsoft.Web.WebView2.WinForms.WebView2 webView)
         {
             // Step 1: Get image from DB
-            var SetImage = new PostResponse(); // Replace with actual DB fetch
-            
-            int photoId = SetImage.getIDNum;
-           byte[] imageBytes = LoadImage(photoId);
+            // Replace with actual DB fetch
+           
+             int photoId = GetSelectedID();
+            byte[] imageBytes = LoadImage(photoId);
 
             // Step 2: Save to temp file (for local testing we pretend it’s hosted)
             string tempPath = Path.Combine(Path.GetTempPath(), "photopea_input.png");

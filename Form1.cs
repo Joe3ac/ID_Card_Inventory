@@ -11,8 +11,9 @@ using Microsoft.Office.Interop.Publisher;
 using Microsoft.VisualBasic;
 using static Class1.ComboBoxEventHub;
 using static Class1.ConfigureControls;
- 
- 
+using ID_Card_Inventory.Photopea;
+
+
 namespace ID_Card_Inventory
 {
     public partial class Form1 : Form
@@ -231,14 +232,9 @@ namespace ID_Card_Inventory
                     { 
                         idPicBox.Image = Image.FromStream(ms); // Display the image in the PictureBox
                     }
-                    var setIDValue = new PostResponse
-                    {
-                        
-                        getIDNum = employeeId,
-                        
+                    //var setIDValue = new PostResponse(employeeId);
+                    PhotopeaConfig.SetSelectedID(employeeId);
 
-
-                    };
                 }
                 else
                 {
@@ -354,7 +350,7 @@ namespace ID_Card_Inventory
         {
             PhotopeaForm photopeaForm = new PhotopeaForm();
             photopeaForm.Show();
-            this.Hide();
+            
         }
     }
 }
