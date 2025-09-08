@@ -108,7 +108,7 @@ namespace ID_Card_Inventory.Photopea
             }
 
             // In real use: expose via localhost server or upload to a host
-            string hostedUrl = "$\"https://localhost:7040/api/photopea/{photoId}";
+            string hostedUrl = "$\"https://localhost:7040/api/photopea/{tempPath}";
             
 
             // Step 3: Build JSON config
