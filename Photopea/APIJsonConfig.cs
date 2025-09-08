@@ -91,25 +91,30 @@ namespace ID_Card_Inventory.Photopea
 
             // Step 2: Ensure image is in PNG format and save to temp file
             string tempPath = Path.Combine(Path.GetTempPath(), "photopea_input.png");
-            using (var ms = new MemoryStream(imageBytes))
-            {
-                try
-                {
-                    using (var img = System.Drawing.Image.FromStream(ms))
-                    {
-                        img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Png);
-                    }
-                }
-                catch (ArgumentException)
-                {
-                    // If imageBytes is already a PNG or not a valid image, just write as is
-                    File.WriteAllBytes(tempPath, imageBytes);
-                }
-            }
+            //using (var ms = new MemoryStream(imageBytes))
+            //{
+            //    try
+            //    {
+            //        using (var img = System.Drawing.Image.FromStream(ms))
+            //        {
+            //            img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Png);
+            //        }
+            //    }
+            //    catch (ArgumentException)
+            //    {
+            //        // If imageBytes is already a PNG or not a valid image, just write as is
+            //        File.WriteAllBytes(tempPath, imageBytes);
+            //    }
+            //}
+
+            using var ms = new MemoryStream(imageBytes);
+            using var img = System.Drawing.Image.FromStream(ms);
+            img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Png);
+
 
             // In real use: expose via localhost server or upload to a host
-            string hostedUrl = "$\"https://localhost:7040/api/photopea/{tempPath}";
-            
+            string hostedUrl = $"https://localhost:7040/api/photopea/{Path.GetFileName(tempPath)}";
+
 
             // Step 3: Build JSON config
             var cfg = new
