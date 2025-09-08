@@ -89,12 +89,27 @@ namespace ID_Card_Inventory.Photopea
              int photoId = GetSelectedID();
             byte[] imageBytes = LoadImage(photoId);
 
-            // Step 2: Save to temp file (for local testing we pretend it’s hosted)
+            // Step 2: Ensure image is in PNG format and save to temp file
             string tempPath = Path.Combine(Path.GetTempPath(), "photopea_input.png");
-            File.WriteAllBytes(tempPath, imageBytes);
+            using (var ms = new MemoryStream(imageBytes))
+            {
+                try
+                {
+                    using (var img = System.Drawing.Image.FromStream(ms))
+                    {
+                        img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Png);
+                    }
+                }
+                catch (ArgumentException)
+                {
+                    // If imageBytes is already a PNG or not a valid image, just write as is
+                    File.WriteAllBytes(tempPath, imageBytes);
+                }
+            }
 
             // In real use: expose via localhost server or upload to a host
             string hostedUrl = "$\"https://localhost:7040/api/photopea/{photoId}";
+            
 
             // Step 3: Build JSON config
             var cfg = new
