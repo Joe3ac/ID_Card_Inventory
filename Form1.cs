@@ -210,8 +210,8 @@ namespace ID_Card_Inventory
         private void ClearfilterAndReloadData()
         {
             NameSearch.Clear();
-            DeptMent_comboBox.SelectedIndex = 0;
-            ApplyLiveFilter()
+           deptSearchcomboBox.SelectedIndex = -1;
+            ApplyLiveFilter();
             
         }
 
