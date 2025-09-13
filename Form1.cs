@@ -209,13 +209,10 @@ namespace ID_Card_Inventory
         }
         private void ClearfilterAndReloadData()
         {
-            string name =Name
-            //loadData(); // Reload the data without any filters
-           //string name = NameSearch.Text = string.Empty; // Clear the search text
-           // int deptid=deptSearchcomboBox.SelectedIndex = -1; // Clear the selected department
-           // iDdataGridView.ClearSelection(); // Clear any selected rows in the DataGridView
-            getDataFromSql(name, deptid);  
-            //ApplyLiveFilter(); // Reload the data with empty search text and no department selected/ Reload the data without any filters
+            NameSearch.Clear();
+            DeptMent_comboBox.SelectedIndex = 0;
+            ApplyLiveFilter()
+            
         }
 
         private void iDdataGridView_Click(object sender, EventArgs e)
